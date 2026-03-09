@@ -353,8 +353,19 @@ input[type="number"].fitting-price {
     }
   </style>
 </head>
+	<div id="loginScreen" style="display:flex;align-items:center;justify-content:center;height:100vh;background:#f8fafc;font-family:Arial;">
+  <div style="background:white;padding:40px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,0.1);text-align:center;">
+    <h2>Rebate Calculator</h2>
+    <p>Enter password to continue</p>
+    <input type="password" id="passwordInput" style="padding:10px;border-radius:8px;border:1px solid #ccc;margin-top:10px;">
+    <br><br>
+    <button onclick="checkPassword()" style="padding:10px 20px;border-radius:8px;border:none;background:#0f172a;color:white;">Login</button>
+    <p id="errorMsg" style="color:red;margin-top:10px;"></p>
+  </div>
+</div>
 <body>
-  <div class="container">
+<div id="appContent" style="display:none;">
+<div class="container">	
     <section class="hero">
       <div>
         <div class="badge-row">
@@ -629,5 +640,8 @@ function inputField(value, path, suffix, step = '0.5', extraClass = '') {
 
     render();
   </script>
+
+	</div>
+</div>
 </body>
 </html>
