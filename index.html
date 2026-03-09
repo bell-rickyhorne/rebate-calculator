@@ -649,31 +649,28 @@ function inputField(value, path, suffix, step = '0.5', extraClass = '') {
 const appPassword = "bell123";
 
 function checkPassword() {
-  const entered = document.getElementById("passwordInput").value;
+  const input = document.getElementById("passwordInput").value;
 
-  if (entered === appPassword) {
-
-    sessionStorage.setItem("calculatorAccess","true");
+  if (input === appPassword) {
+    sessionStorage.setItem("calculatorAccess", "true");
 
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("appContent").style.display = "block";
 
   } else {
-    document.getElementById("errorMsg").innerText = "Incorrect password";
+    document.getElementById("errorMsg").textContent = "Incorrect password";
   }
 }
 
-window.onload = function() {
+document.addEventListener("DOMContentLoaded", function () {
 
-  if(sessionStorage.getItem("calculatorAccess") === "true"){
-
+  if (sessionStorage.getItem("calculatorAccess") === "true") {
     document.getElementById("loginScreen").style.display = "none";
     document.getElementById("appContent").style.display = "block";
-
   }
 
-}
+});
 
-</script>	
+</script>
 </body>
 </html>
