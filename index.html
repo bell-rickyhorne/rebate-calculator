@@ -479,16 +479,26 @@ input[type="number"].fitting-price {
       const rows = section.rows;
       const lampTotal = rows.reduce((sum, row) => sum + (Number(section.lampPercentages[row]) || 0) / 100, 0);
       const fittingTotal = rows.reduce((sum, row) => sum + (Number(section.fittingPercentages[row]) || 0) / 100, 0);
-      const lampRebate = section.lampScreenPrice * lampTotal;
-      const fittingRebate = section.fittingScreenPrice * fittingTotal;
+      // Only genuine rebates / buy-ins populate the Rebate cards.
+      // Settlement and Online Ordering remain part of the full rolled terms used below.
+      const isExcludedFromRebate = (row) => {
+        const key = String(row).trim().toLowerCase().replace(/\s+/g, " ");
+        return key === "settlement" || key === "online ordering";
+      };
+      const lampRebateTotal = rows.reduce((sum, row) =>
+        isExcludedFromRebate(row) ? sum : sum + (Number(section.lampPercentages[row]) || 0) / 100, 0);
+      const fittingRebateTotal = rows.reduce((sum, row) =>
+        isExcludedFromRebate(row) ? sum : sum + (Number(section.fittingPercentages[row]) || 0) / 100, 0);
+      const lampRebate = section.lampScreenPrice * lampRebateTotal;
+      const fittingRebate = section.fittingScreenPrice * fittingRebateTotal;
 
       return {
         lampTotal,
         fittingTotal,
         lampRebate,
         fittingRebate,
-        lampNetNet: section.lampScreenPrice - lampRebate,
-        fittingNetNet: section.fittingScreenPrice - fittingRebate,
+        lampNetNet: section.lampScreenPrice - (section.lampScreenPrice * lampTotal),
+        fittingNetNet: section.fittingScreenPrice - (section.fittingScreenPrice * fittingTotal),
         lampSpend5k: 5000 * lampTotal,
         lampSpend10k: 10000 * lampTotal,
         lampSpend25k: 25000 * lampTotal,
